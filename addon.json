@@ -1,0 +1,25 @@
+{
+  "name": "Mon Premier Addon",
+  "description": "Un addon simple pour MyWallpaper",
+  "version": "1.0.0",
+  "author": {
+    "name": "Votre Nom",
+    "github": "votreusername"
+  },
+  "type": "widget",
+  "category": ["clock"],
+  "settings": {
+    "color": {
+      "type": "color",
+      "label": "Couleur",
+      "default": "#3B82F6"
+    },
+    "size": {
+      "type": "range", 
+      "label": "Taille",
+      "default": 200,
+      "min": 100,
+      "max": 400
+    }
+  }
+}
