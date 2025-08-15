@@ -1,25 +1,124 @@
 {
-  "name": "Mon Premier Addon",
-  "description": "Un addon simple pour MyWallpaper",
-  "version": "1.0.0",
+  "name": "Addon Template Avancé",
+  "description": "Template avec tous les types de settings pour tests",
+  "version": "2.0.0",
   "author": {
-    "name": "Votre Nom",
-    "github": "votreusername"
+    "name": "MyWallpaper Team",
+    "github": "rayandu924"
   },
   "type": "widget",
-  "category": ["clock"],
+  "category": ["demo", "test"],
   "settings": {
-    "color": {
+    "primaryColor": {
       "type": "color",
-      "label": "Couleur",
+      "label": "Couleur principale",
+      "description": "Couleur principale de l'addon",
       "default": "#3B82F6"
     },
+    "secondaryColor": {
+      "type": "color", 
+      "label": "Couleur secondaire",
+      "default": "#10B981"
+    },
     "size": {
-      "type": "range", 
+      "type": "range",
       "label": "Taille",
+      "description": "Taille du widget (px)",
       "default": 200,
       "min": 100,
-      "max": 400
+      "max": 500,
+      "step": 10
+    },
+    "opacity": {
+      "type": "range",
+      "label": "Opacité",
+      "default": 80,
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%"
+    },
+    "speed": {
+      "type": "range",
+      "label": "Vitesse animation",
+      "default": 1.0,
+      "min": 0.1,
+      "max": 3.0,
+      "step": 0.1
+    },
+    "enabled": {
+      "type": "boolean",
+      "label": "Activer l'addon",
+      "description": "Active ou désactive l'addon",
+      "default": true
+    },
+    "showBorder": {
+      "type": "boolean",
+      "label": "Afficher la bordure",
+      "default": false
+    },
+    "autoHide": {
+      "type": "boolean",
+      "label": "Masquage automatique",
+      "default": true
+    },
+    "theme": {
+      "type": "select",
+      "label": "Thème",
+      "description": "Choisir le thème de l'addon",
+      "default": "modern",
+      "options": [
+        { "value": "classic", "label": "Classique" },
+        { "value": "modern", "label": "Moderne" },
+        { "value": "minimal", "label": "Minimaliste" },
+        { "value": "glassmorphism", "label": "Glassmorphism" }
+      ]
+    },
+    "position": {
+      "type": "select",
+      "label": "Position",
+      "default": "center",
+      "options": [
+        { "value": "top-left", "label": "Haut gauche" },
+        { "value": "top-center", "label": "Haut centre" },
+        { "value": "top-right", "label": "Haut droite" },
+        { "value": "center", "label": "Centre" },
+        { "value": "bottom-left", "label": "Bas gauche" },
+        { "value": "bottom-center", "label": "Bas centre" },
+        { "value": "bottom-right", "label": "Bas droite" }
+      ]
+    },
+    "displayText": {
+      "type": "text",
+      "label": "Texte à afficher",
+      "description": "Texte personnalisé",
+      "default": "Hello World",
+      "placeholder": "Saisissez votre texte..."
+    },
+    "fontSize": {
+      "type": "number",
+      "label": "Taille police",
+      "description": "Taille de la police en pixels",
+      "default": 16,
+      "min": 8,
+      "max": 72
+    },
+    "borderRadius": {
+      "type": "number",
+      "label": "Rayon bordure",
+      "default": 8,
+      "min": 0,
+      "max": 50,
+      "unit": "px"
+    },
+    "refreshInterval": {
+      "type": "number",
+      "label": "Intervalle de rafraîchissement",
+      "default": 1000,
+      "min": 100,
+      "max": 10000,
+      "step": 100,
+      "unit": "ms"
     }
   }
 }
