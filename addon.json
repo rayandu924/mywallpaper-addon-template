@@ -1,7 +1,7 @@
 {
   "name": "Addon Template Avancé",
   "description": "Template avec tous les types de settings pour tests",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "author": {
     "name": "MyWallpaper Team",
     "github": "rayandu924"
@@ -119,6 +119,35 @@
       "max": 10000,
       "step": 100,
       "unit": "ms"
+    },
+    "shadowIntensity": {
+      "type": "range",
+      "label": "Intensité ombre",
+      "description": "Intensité de l'ombre portée",
+      "default": 50,
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%"
+    },
+    "animationType": {
+      "type": "select",
+      "label": "Type d'animation",
+      "description": "Style d'animation du widget",
+      "default": "bounce",
+      "options": [
+        { "value": "none", "label": "Aucune" },
+        { "value": "bounce", "label": "Rebond" },
+        { "value": "fade", "label": "Fondu" },
+        { "value": "slide", "label": "Glissement" },
+        { "value": "zoom", "label": "Zoom" }
+      ]
+    },
+    "showTimestamp": {
+      "type": "boolean",
+      "label": "Afficher timestamp",
+      "description": "Affiche l'heure de dernière mise à jour",
+      "default": false
     }
   }
 }

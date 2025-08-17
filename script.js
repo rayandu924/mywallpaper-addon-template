@@ -13,7 +13,11 @@ let settings = {
   displayText: 'Hello World',
   fontSize: 16,
   borderRadius: 20,
-  refreshInterval: 1000
+  refreshInterval: 1000,
+  // 🆕 v2.1.0 - Nouvelles fonctionnalités
+  shadowIntensity: 50,
+  animationType: 'bounce',
+  showTimestamp: false
 };
 
 // Variables pour l'horloge
@@ -60,6 +64,11 @@ function updateClock() {
   
   timeElement.textContent = time;
   dateElement.textContent = date;
+  
+  // 🆕 v2.1.0 - Mettre à jour le timestamp si activé
+  if (settings.showTimestamp) {
+    updateTimestamp();
+  }
 }
 
 // Gérer les messages de MyWallpaper
@@ -173,6 +182,24 @@ function applyAllSettings(config) {
   if (config.refreshInterval) {
     restartClockUpdate(config.refreshInterval);
   }
+  
+  // 🆕 v2.1.0 - Nouvelles fonctionnalités
+  
+  // 🌑 Intensité de l'ombre
+  if (config.shadowIntensity !== undefined) {
+    document.documentElement.style.setProperty('--shadow-intensity', config.shadowIntensity / 100);
+  }
+  
+  // 🎬 Type d'animation
+  if (config.animationType) {
+    widget.classList.remove('anim-none', 'anim-bounce', 'anim-fade', 'anim-slide', 'anim-zoom');
+    widget.classList.add('anim-' + config.animationType);
+  }
+  
+  // ⏰ Timestamp
+  if (config.showTimestamp !== undefined) {
+    toggleTimestamp(config.showTimestamp);
+  }
 }
 
 // Démarrer la mise à jour de l'horloge
@@ -199,6 +226,31 @@ function updateDisplayText(text) {
   }
   
   displayElement.textContent = text;
+}
+
+// 🆕 v2.1.0 - Afficher/masquer le timestamp
+function toggleTimestamp(show) {
+  let timestampElement = document.querySelector('.timestamp');
+  
+  if (show && !timestampElement) {
+    // Créer l'élément timestamp
+    timestampElement = document.createElement('div');
+    timestampElement.className = 'timestamp';
+    document.querySelector('.clock').appendChild(timestampElement);
+    updateTimestamp();
+  } else if (!show && timestampElement) {
+    // Supprimer l'élément timestamp
+    timestampElement.remove();
+  }
+}
+
+// Mettre à jour le timestamp
+function updateTimestamp() {
+  const timestampElement = document.querySelector('.timestamp');
+  if (timestampElement) {
+    const now = new Date();
+    timestampElement.textContent = `Mis à jour: ${now.toLocaleTimeString()}`;
+  }
 }
 
 // Mettre à jour la taille (legacy)
