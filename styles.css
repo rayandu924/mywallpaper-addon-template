@@ -1,7 +1,20 @@
-/* Variables CSS pour les paramètres */
+/* Variables CSS pour tous les paramètres déclarés */
 :root {
+  /* Couleurs */
   --primary-color: #3B82F6;
+  --secondary-color: #10B981;
+  
+  /* Dimensions */
   --widget-size: 200px;
+  --font-size: 16px;
+  --border-radius: 20px;
+  
+  /* Effets */
+  --opacity: 1;
+  --speed: 1s;
+  
+  /* Autres */
+  --refresh-interval: 1000ms;
 }
 
 body {
@@ -17,11 +30,59 @@ body {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
+  border-radius: var(--border-radius);
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  opacity: var(--opacity);
+  transition: all var(--speed) ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Support de la variable enabled */
+.widget.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Support de la variable showBorder */
+.widget.no-border {
+  border: none;
+}
+
+/* Support de la variable autoHide */
+.widget.auto-hide {
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.widget.auto-hide:hover {
+  opacity: var(--opacity);
+}
+
+/* Thèmes */
+.theme-classic {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  backdrop-filter: none;
+}
+
+.theme-modern {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.theme-minimal {
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  backdrop-filter: none;
+}
+
+.theme-glassmorphism {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .clock {
@@ -30,13 +91,34 @@ body {
 }
 
 .time {
-  font-size: 2.5em;
+  font-size: calc(var(--font-size) * 2.5);
   font-weight: bold;
   color: var(--primary-color);
   margin-bottom: 10px;
+  animation: pulse var(--speed) infinite alternate;
 }
 
 .date {
-  font-size: 1em;
+  font-size: var(--font-size);
   opacity: 0.8;
+  color: var(--secondary-color);
 }
+
+.display-text {
+  font-size: var(--font-size);
+  color: var(--primary-color);
+  margin-top: 10px;
+  padding: 5px 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: calc(var(--border-radius) / 2);
+}
+
+@keyframes pulse {
+  0% { opacity: 0.8; }
+  100% { opacity: 1; }
+}
+
+/* Animation speed control */
+.speed-slow { --speed: 3s; }
+.speed-normal { --speed: 1s; }
+.speed-fast { --speed: 0.3s; }
