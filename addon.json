@@ -1,7 +1,7 @@
 {
   "name": "Addon Template Avancé",
   "description": "Template avec tous les types de settings pour tests",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "author": {
     "name": "MyWallpaper Team",
     "github": "rayandu924"
@@ -148,6 +148,51 @@
       "label": "Afficher timestamp",
       "description": "Affiche l'heure de dernière mise à jour",
       "default": false
+    },
+    "backgroundBlur": {
+      "type": "range",
+      "label": "Flou d'arrière-plan",
+      "description": "Effet de flou en arrière-plan",
+      "default": 0,
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px"
+    },
+    "rotationAngle": {
+      "type": "range",
+      "label": "Angle de rotation",
+      "description": "Rotation du widget en degrés",
+      "default": 0,
+      "min": -180,
+      "max": 180,
+      "step": 5,
+      "unit": "°"
+    },
+    "pulseEffect": {
+      "type": "boolean",
+      "label": "Effet de pulsation",
+      "description": "Animation de pulsation continue",
+      "default": false
+    },
+    "glowColor": {
+      "type": "color",
+      "label": "Couleur de lueur",
+      "description": "Couleur de l'effet de lueur",
+      "default": "#FF6B6B"
+    },
+    "seasonalMode": {
+      "type": "select",
+      "label": "Mode saisonnier",
+      "description": "Thème adapté à la saison",
+      "default": "auto",
+      "options": [
+        { "value": "auto", "label": "Automatique" },
+        { "value": "spring", "label": "Printemps 🌸" },
+        { "value": "summer", "label": "Été ☀️" },
+        { "value": "autumn", "label": "Automne 🍂" },
+        { "value": "winter", "label": "Hiver ❄️" }
+      ]
     }
   }
 }

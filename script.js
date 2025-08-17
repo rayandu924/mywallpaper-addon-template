@@ -17,7 +17,13 @@ let settings = {
   // 🆕 v2.1.0 - Nouvelles fonctionnalités
   shadowIntensity: 50,
   animationType: 'bounce',
-  showTimestamp: false
+  showTimestamp: false,
+  // 🆕 v2.2.0 - Fonctionnalités avancées
+  backgroundBlur: 0,
+  rotationAngle: 0,
+  pulseEffect: false,
+  glowColor: '#FF6B6B',
+  seasonalMode: 'auto'
 };
 
 // Variables pour l'horloge
@@ -200,6 +206,39 @@ function applyAllSettings(config) {
   if (config.showTimestamp !== undefined) {
     toggleTimestamp(config.showTimestamp);
   }
+  
+  // 🆕 v2.2.0 - Fonctionnalités avancées
+  
+  // 🌫️ Flou d'arrière-plan
+  if (config.backgroundBlur !== undefined) {
+    document.documentElement.style.setProperty('--bg-blur', config.backgroundBlur + 'px');
+  }
+  
+  // 🔄 Rotation
+  if (config.rotationAngle !== undefined) {
+    document.documentElement.style.setProperty('--rotation', config.rotationAngle + 'deg');
+  }
+  
+  // 💓 Effet de pulsation
+  if (config.pulseEffect !== undefined) {
+    widget.classList.toggle('pulse-effect', config.pulseEffect);
+  }
+  
+  // ✨ Couleur de lueur
+  if (config.glowColor) {
+    document.documentElement.style.setProperty('--glow-color', config.glowColor);
+  }
+  
+  // 🌿 Mode saisonnier
+  if (config.seasonalMode) {
+    widget.classList.remove('season-spring', 'season-summer', 'season-autumn', 'season-winter');
+    if (config.seasonalMode !== 'auto') {
+      widget.classList.add('season-' + config.seasonalMode);
+    } else {
+      // Mode automatique basé sur la date
+      applySeasonalTheme();
+    }
+  }
 }
 
 // Démarrer la mise à jour de l'horloge
@@ -251,6 +290,22 @@ function updateTimestamp() {
     const now = new Date();
     timestampElement.textContent = `Mis à jour: ${now.toLocaleTimeString()}`;
   }
+}
+
+// 🆕 v2.2.0 - Appliquer le thème saisonnier automatique
+function applySeasonalTheme() {
+  const now = new Date();
+  const month = now.getMonth(); // 0-11
+  const widget = document.querySelector('.widget');
+  
+  let season;
+  if (month >= 2 && month <= 4) season = 'spring';      // Mars-Mai
+  else if (month >= 5 && month <= 7) season = 'summer';  // Juin-Août
+  else if (month >= 8 && month <= 10) season = 'autumn'; // Sept-Nov
+  else season = 'winter';                                // Déc-Fév
+  
+  widget.classList.add('season-' + season);
+  console.log(`🌿 Mode saisonnier automatique: ${season}`);
 }
 
 // Mettre à jour la taille (legacy)
