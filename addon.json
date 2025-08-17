@@ -1,7 +1,7 @@
 {
   "name": "Addon Template Avancé",
-  "description": "Template avec tous les types de settings pour tests",
-  "version": "2.2.0",
+  "description": "Template avec seulement 2 settings pour tester le changement de version",
+  "version": "2.3.0",
   "author": {
     "name": "MyWallpaper Team",
     "github": "rayandu924"
@@ -13,186 +13,14 @@
       "type": "color",
       "label": "Couleur principale",
       "description": "Couleur principale de l'addon",
-      "default": "#3B82F6"
-    },
-    "secondaryColor": {
-      "type": "color", 
-      "label": "Couleur secondaire",
-      "default": "#10B981"
-    },
-    "size": {
-      "type": "range",
-      "label": "Taille",
-      "description": "Taille du widget (px)",
-      "default": 200,
-      "min": 100,
-      "max": 500,
-      "step": 10
-    },
-    "opacity": {
-      "type": "range",
-      "label": "Opacité",
-      "default": 80,
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "%"
-    },
-    "speed": {
-      "type": "range",
-      "label": "Vitesse animation",
-      "default": 1.0,
-      "min": 0.1,
-      "max": 3.0,
-      "step": 0.1
-    },
-    "enabled": {
-      "type": "boolean",
-      "label": "Activer l'addon",
-      "description": "Active ou désactive l'addon",
-      "default": true
-    },
-    "showBorder": {
-      "type": "boolean",
-      "label": "Afficher la bordure",
-      "default": false
-    },
-    "autoHide": {
-      "type": "boolean",
-      "label": "Masquage automatique",
-      "default": true
-    },
-    "theme": {
-      "type": "select",
-      "label": "Thème",
-      "description": "Choisir le thème de l'addon",
-      "default": "modern",
-      "options": [
-        { "value": "classic", "label": "Classique" },
-        { "value": "modern", "label": "Moderne" },
-        { "value": "minimal", "label": "Minimaliste" },
-        { "value": "glassmorphism", "label": "Glassmorphism" }
-      ]
-    },
-    "position": {
-      "type": "select",
-      "label": "Position",
-      "default": "center",
-      "options": [
-        { "value": "top-left", "label": "Haut gauche" },
-        { "value": "top-center", "label": "Haut centre" },
-        { "value": "top-right", "label": "Haut droite" },
-        { "value": "center", "label": "Centre" },
-        { "value": "bottom-left", "label": "Bas gauche" },
-        { "value": "bottom-center", "label": "Bas centre" },
-        { "value": "bottom-right", "label": "Bas droite" }
-      ]
+      "default": "#FF0000"
     },
     "displayText": {
       "type": "text",
       "label": "Texte à afficher",
       "description": "Texte personnalisé",
-      "default": "Hello World",
+      "default": "Version 2.3.0 - Simple!",
       "placeholder": "Saisissez votre texte..."
-    },
-    "fontSize": {
-      "type": "number",
-      "label": "Taille police",
-      "description": "Taille de la police en pixels",
-      "default": 16,
-      "min": 8,
-      "max": 72
-    },
-    "borderRadius": {
-      "type": "number",
-      "label": "Rayon bordure",
-      "default": 8,
-      "min": 0,
-      "max": 50,
-      "unit": "px"
-    },
-    "refreshInterval": {
-      "type": "number",
-      "label": "Intervalle de rafraîchissement",
-      "default": 1000,
-      "min": 100,
-      "max": 10000,
-      "step": 100,
-      "unit": "ms"
-    },
-    "shadowIntensity": {
-      "type": "range",
-      "label": "Intensité ombre",
-      "description": "Intensité de l'ombre portée",
-      "default": 50,
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "%"
-    },
-    "animationType": {
-      "type": "select",
-      "label": "Type d'animation",
-      "description": "Style d'animation du widget",
-      "default": "bounce",
-      "options": [
-        { "value": "none", "label": "Aucune" },
-        { "value": "bounce", "label": "Rebond" },
-        { "value": "fade", "label": "Fondu" },
-        { "value": "slide", "label": "Glissement" },
-        { "value": "zoom", "label": "Zoom" }
-      ]
-    },
-    "showTimestamp": {
-      "type": "boolean",
-      "label": "Afficher timestamp",
-      "description": "Affiche l'heure de dernière mise à jour",
-      "default": false
-    },
-    "backgroundBlur": {
-      "type": "range",
-      "label": "Flou d'arrière-plan",
-      "description": "Effet de flou en arrière-plan",
-      "default": 0,
-      "min": 0,
-      "max": 20,
-      "step": 1,
-      "unit": "px"
-    },
-    "rotationAngle": {
-      "type": "range",
-      "label": "Angle de rotation",
-      "description": "Rotation du widget en degrés",
-      "default": 0,
-      "min": -180,
-      "max": 180,
-      "step": 5,
-      "unit": "°"
-    },
-    "pulseEffect": {
-      "type": "boolean",
-      "label": "Effet de pulsation",
-      "description": "Animation de pulsation continue",
-      "default": false
-    },
-    "glowColor": {
-      "type": "color",
-      "label": "Couleur de lueur",
-      "description": "Couleur de l'effet de lueur",
-      "default": "#FF6B6B"
-    },
-    "seasonalMode": {
-      "type": "select",
-      "label": "Mode saisonnier",
-      "description": "Thème adapté à la saison",
-      "default": "auto",
-      "options": [
-        { "value": "auto", "label": "Automatique" },
-        { "value": "spring", "label": "Printemps 🌸" },
-        { "value": "summer", "label": "Été ☀️" },
-        { "value": "autumn", "label": "Automne 🍂" },
-        { "value": "winter", "label": "Hiver ❄️" }
-      ]
     }
   }
 }
