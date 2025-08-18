@@ -1,7 +1,7 @@
 {
   "name": "Addon Template Avancé",
   "description": "Template avec seulement 2 settings pour tester le changement de version",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "author": {
     "name": "MyWallpaper Team",
     "github": "rayandu924"
@@ -19,7 +19,7 @@
       "type": "text",
       "label": "Texte à afficher",
       "description": "Texte personnalisé",
-      "default": "Version 2.3.0 - Simple!",
+      "default": "Version 2.4.0 - Nouvelle release!",
       "placeholder": "Saisissez votre texte..."
     }
   }
