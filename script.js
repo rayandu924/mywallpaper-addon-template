@@ -1,43 +1,35 @@
-// Variables globales avec valeurs par défaut
+// 🤖 MATRIX v2.5.0 - Cyberpunk JavaScript
 let settings = {
-  primaryColor: '#3B82F6',
-  secondaryColor: '#10B981',
-  size: 200,
-  opacity: 80,
-  speed: 1,
-  enabled: true,
-  showBorder: false,
-  autoHide: true,
-  theme: 'modern',
-  position: 'center',
-  displayText: 'Hello World',
-  fontSize: 16,
-  borderRadius: 20,
-  refreshInterval: 1000,
-  // 🆕 v2.1.0 - Nouvelles fonctionnalités
-  shadowIntensity: 50,
-  animationType: 'bounce',
-  showTimestamp: false,
-  // 🆕 v2.2.0 - Fonctionnalités avancées
-  backgroundBlur: 0,
-  rotationAngle: 0,
-  pulseEffect: false,
-  glowColor: '#FF6B6B',
-  seasonalMode: 'auto'
+  primaryColor: '#00ff41',
+  displayText: '🤖 MATRIX v2.5.0 🤖'
+};
+
+// Variables Matrix Rain
+let matrixRain = {
+  canvas: null,
+  ctx: null,
+  drops: [],
+  characters: "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+  fontSize: 14,
+  columns: 0
 };
 
 // Variables pour l'horloge
 let clockInterval = null;
 
-// Initialisation
+// 🤖 Initialisation Matrix
 function init() {
-  updateClock();
+  console.log('🤖 MATRIX v2.5.0 initialisé!');
   
-  // Appliquer la configuration initiale
-  applyAllSettings(settings);
+  // Initialiser Matrix Rain
+  initMatrixRain();
   
   // Démarrer l'horloge
+  updateClock();
   startClockUpdate();
+  
+  // Appliquer les settings initiaux
+  applySettings();
   
   // Écouter les messages de MyWallpaper
   window.addEventListener('message', handleMessage);
@@ -45,296 +37,168 @@ function init() {
   // Signaler que l'addon est prêt
   sendMessage('ADDON_READY');
   
-  console.log('🚀 Addon Template Avancé initialisé avec tous les paramètres');
+  console.log('🤖 MATRIX Interface opérationnelle - Bienvenue dans la Matrice!');
 }
 
-// Mettre à jour l'horloge
+// 🌧️ Initialiser l'effet Matrix Rain
+function initMatrixRain() {
+  const canvas = document.getElementById('matrix-rain');
+  if (!canvas) return;
+  
+  matrixRain.canvas = canvas;
+  matrixRain.ctx = canvas.getContext('2d');
+  
+  // Redimensionner le canvas
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+  
+  // Initialiser les gouttes
+  initDrops();
+  
+  // Démarrer l'animation
+  animateMatrix();
+}
+
+// 📐 Redimensionner le canvas
+function resizeCanvas() {
+  matrixRain.canvas.width = window.innerWidth;
+  matrixRain.canvas.height = window.innerHeight;
+  matrixRain.columns = Math.floor(matrixRain.canvas.width / matrixRain.fontSize);
+  initDrops();
+}
+
+// 💧 Initialiser les gouttes Matrix
+function initDrops() {
+  matrixRain.drops = [];
+  for (let i = 0; i < matrixRain.columns; i++) {
+    matrixRain.drops[i] = Math.random() * matrixRain.canvas.height / matrixRain.fontSize;
+  }
+}
+
+// 🎬 Animation Matrix Rain
+function animateMatrix() {
+  const ctx = matrixRain.ctx;
+  
+  // Fond noir semi-transparent pour l'effet de traînée
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+  ctx.fillRect(0, 0, matrixRain.canvas.width, matrixRain.canvas.height);
+  
+  // Texte vert Matrix
+  ctx.fillStyle = '#00ff41';
+  ctx.font = `${matrixRain.fontSize}px Share Tech Mono, monospace`;
+  
+  // Dessiner les caractères qui tombent
+  for (let i = 0; i < matrixRain.drops.length; i++) {
+    const char = matrixRain.characters[Math.floor(Math.random() * matrixRain.characters.length)];
+    const x = i * matrixRain.fontSize;
+    const y = matrixRain.drops[i] * matrixRain.fontSize;
+    
+    ctx.fillText(char, x, y);
+    
+    // Réinitialiser la goutte si elle sort de l'écran
+    if (y > matrixRain.canvas.height && Math.random() > 0.975) {
+      matrixRain.drops[i] = 0;
+    }
+    
+    matrixRain.drops[i]++;
+  }
+  
+  requestAnimationFrame(animateMatrix);
+}
+
+// ⏰ Mettre à jour l'horloge
 function updateClock() {
   const now = new Date();
+  
+  // Format heure Matrix style
+  const time = now.toLocaleTimeString('fr-FR', {
+    hour12: false,
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  });
+  
+  // Format date Matrix style
+  const date = now.toISOString().split('T')[0];
+  
+  // Mettre à jour l'interface
   const timeElement = document.getElementById('time');
   const dateElement = document.getElementById('date');
   
-  // Format de l'heure
-  const time = now.toLocaleTimeString('fr-FR', {
-    hour: '2-digit',
-    minute: '2-digit'
-  });
-  
-  // Format de la date
-  const date = now.toLocaleDateString('fr-FR', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-  
-  timeElement.textContent = time;
-  dateElement.textContent = date;
-  
-  // 🆕 v2.1.0 - Mettre à jour le timestamp si activé
-  if (settings.showTimestamp) {
-    updateTimestamp();
-  }
+  if (timeElement) timeElement.textContent = time;
+  if (dateElement) dateElement.textContent = date;
 }
 
-// Gérer les messages de MyWallpaper
-function handleMessage(event) {
-  const message = event.data;
-  
-  // Support des deux formats de message
-  if (message.type === 'SETTINGS_UPDATE' && message.source === 'MyWallpaperHost') {
-    console.log('📥 SETTINGS_UPDATE reçu:', message.settings);
-    updateSettings(message.settings);
-  } else if (message.type === 'CONFIG_UPDATE') {
-    console.log('📥 CONFIG_UPDATE reçu:', message.config);
-    updateSettings(message.config);
-  } else if (message.type === 'RESIZE') {
-    updateSize(message.width, message.height);
-  }
-}
-
-// Mettre à jour les paramètres
-function updateSettings(newSettings) {
-  console.log('🔧 Mise à jour des settings:', newSettings);
-  
-  // Fusionner avec les settings existants
-  settings = { ...settings, ...newSettings };
-  
-  // Support legacy - mapper color vers primaryColor
-  if (newSettings.color && !newSettings.primaryColor) {
-    settings.primaryColor = newSettings.color;
-  }
-  
-  // Appliquer tous les changements
-  applyAllSettings(settings);
-  
-  console.log('✅ Settings appliqués:', settings);
-}
-
-// Appliquer tous les paramètres
-function applyAllSettings(config) {
-  const widget = document.querySelector('.widget');
-  const time = document.querySelector('.time');
-  const date = document.querySelector('.date');
-  
-  if (!widget) return;
-  
-  // 🎨 Couleurs
-  if (config.primaryColor) {
-    document.documentElement.style.setProperty('--primary-color', config.primaryColor);
-  }
-  
-  if (config.secondaryColor) {
-    document.documentElement.style.setProperty('--secondary-color', config.secondaryColor);
-  }
-  
-  // 📏 Dimensions
-  if (config.size) {
-    document.documentElement.style.setProperty('--widget-size', config.size + 'px');
-  }
-  
-  if (config.fontSize) {
-    document.documentElement.style.setProperty('--font-size', config.fontSize + 'px');
-  }
-  
-  if (config.borderRadius !== undefined) {
-    document.documentElement.style.setProperty('--border-radius', config.borderRadius + 'px');
-  }
-  
-  // 🎭 Effets
-  if (config.opacity !== undefined) {
-    document.documentElement.style.setProperty('--opacity', (config.opacity / 100));
-  }
-  
-  if (config.speed) {
-    document.documentElement.style.setProperty('--speed', config.speed + 's');
-    
-    // Classes de vitesse
-    widget.classList.remove('speed-slow', 'speed-normal', 'speed-fast');
-    if (config.speed <= 0.5) widget.classList.add('speed-fast');
-    else if (config.speed >= 2) widget.classList.add('speed-slow');
-    else widget.classList.add('speed-normal');
-  }
-  
-  // ✅ Activation/désactivation
-  if (config.enabled !== undefined) {
-    widget.classList.toggle('disabled', !config.enabled);
-  }
-  
-  // 🖼️ Bordure
-  if (config.showBorder !== undefined) {
-    widget.classList.toggle('no-border', !config.showBorder);
-  }
-  
-  // 👻 Auto-hide
-  if (config.autoHide !== undefined) {
-    widget.classList.toggle('auto-hide', config.autoHide);
-  }
-  
-  // 🎨 Thème
-  if (config.theme) {
-    // Supprimer les anciens thèmes
-    widget.classList.remove('theme-classic', 'theme-modern', 'theme-minimal', 'theme-glassmorphism');
-    // Appliquer le nouveau thème
-    widget.classList.add('theme-' + config.theme);
-  }
-  
-  // 📝 Texte personnalisé
-  if (config.displayText) {
-    updateDisplayText(config.displayText);
-  }
-  
-  // ⏱️ Intervalle de rafraîchissement
-  if (config.refreshInterval) {
-    restartClockUpdate(config.refreshInterval);
-  }
-  
-  // 🆕 v2.1.0 - Nouvelles fonctionnalités
-  
-  // 🌑 Intensité de l'ombre
-  if (config.shadowIntensity !== undefined) {
-    document.documentElement.style.setProperty('--shadow-intensity', config.shadowIntensity / 100);
-  }
-  
-  // 🎬 Type d'animation
-  if (config.animationType) {
-    widget.classList.remove('anim-none', 'anim-bounce', 'anim-fade', 'anim-slide', 'anim-zoom');
-    widget.classList.add('anim-' + config.animationType);
-  }
-  
-  // ⏰ Timestamp
-  if (config.showTimestamp !== undefined) {
-    toggleTimestamp(config.showTimestamp);
-  }
-  
-  // 🆕 v2.2.0 - Fonctionnalités avancées
-  
-  // 🌫️ Flou d'arrière-plan
-  if (config.backgroundBlur !== undefined) {
-    document.documentElement.style.setProperty('--bg-blur', config.backgroundBlur + 'px');
-  }
-  
-  // 🔄 Rotation
-  if (config.rotationAngle !== undefined) {
-    document.documentElement.style.setProperty('--rotation', config.rotationAngle + 'deg');
-  }
-  
-  // 💓 Effet de pulsation
-  if (config.pulseEffect !== undefined) {
-    widget.classList.toggle('pulse-effect', config.pulseEffect);
-  }
-  
-  // ✨ Couleur de lueur
-  if (config.glowColor) {
-    document.documentElement.style.setProperty('--glow-color', config.glowColor);
-  }
-  
-  // 🌿 Mode saisonnier
-  if (config.seasonalMode) {
-    widget.classList.remove('season-spring', 'season-summer', 'season-autumn', 'season-winter');
-    if (config.seasonalMode !== 'auto') {
-      widget.classList.add('season-' + config.seasonalMode);
-    } else {
-      // Mode automatique basé sur la date
-      applySeasonalTheme();
-    }
-  }
-}
-
-// Démarrer la mise à jour de l'horloge
+// ▶️ Démarrer la mise à jour de l'horloge
 function startClockUpdate() {
   if (clockInterval) clearInterval(clockInterval);
-  clockInterval = setInterval(updateClock, settings.refreshInterval || 1000);
+  clockInterval = setInterval(updateClock, 1000);
 }
 
-// Redémarrer l'horloge avec un nouvel intervalle
-function restartClockUpdate(interval) {
-  if (clockInterval) clearInterval(clockInterval);
-  clockInterval = setInterval(updateClock, interval);
-}
-
-// Mettre à jour le texte affiché
-function updateDisplayText(text) {
-  let displayElement = document.querySelector('.display-text');
-  
-  if (!displayElement) {
-    // Créer l'élément s'il n'existe pas
-    displayElement = document.createElement('div');
-    displayElement.className = 'display-text';
-    document.querySelector('.clock').appendChild(displayElement);
+// 🎛️ Appliquer les settings
+function applySettings() {
+  // Mettre à jour le texte personnalisé
+  const customTextElement = document.getElementById('customText');
+  if (customTextElement && settings.displayText) {
+    customTextElement.textContent = settings.displayText;
   }
   
-  displayElement.textContent = text;
+  // Mettre à jour les couleurs si nécessaire
+  if (settings.primaryColor && settings.primaryColor !== '#00ff41') {
+    document.documentElement.style.setProperty('--primary-color', settings.primaryColor);
+    
+    // Mettre à jour les couleurs Matrix
+    const style = document.createElement('style');
+    style.textContent = `
+      .terminal-window { border-color: ${settings.primaryColor} !important; }
+      .matrix-title, .value { color: ${settings.primaryColor} !important; }
+      .version-badge { color: ${settings.primaryColor} !important; }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  console.log('🎛️ Settings Matrix appliqués:', settings);
 }
 
-// 🆕 v2.1.0 - Afficher/masquer le timestamp
-function toggleTimestamp(show) {
-  let timestampElement = document.querySelector('.timestamp');
-  
-  if (show && !timestampElement) {
-    // Créer l'élément timestamp
-    timestampElement = document.createElement('div');
-    timestampElement.className = 'timestamp';
-    document.querySelector('.clock').appendChild(timestampElement);
-    updateTimestamp();
-  } else if (!show && timestampElement) {
-    // Supprimer l'élément timestamp
-    timestampElement.remove();
+// 📨 Gérer les messages de MyWallpaper
+function handleMessage(event) {
+  try {
+    const { type, config, settings: newSettings } = event.data;
+    
+    console.log('📥 Message Matrix reçu:', { type, config, settings: newSettings });
+    
+    if (type === 'CONFIG_UPDATE' && config) {
+      Object.assign(settings, config);
+      applySettings();
+    }
+    
+    if (type === 'SETTINGS_UPDATE' && newSettings) {
+      Object.assign(settings, newSettings);
+      applySettings();
+    }
+    
+  } catch (error) {
+    console.error('❌ Erreur traitement message Matrix:', error);
   }
 }
 
-// Mettre à jour le timestamp
-function updateTimestamp() {
-  const timestampElement = document.querySelector('.timestamp');
-  if (timestampElement) {
-    const now = new Date();
-    timestampElement.textContent = `Mis à jour: ${now.toLocaleTimeString()}`;
-  }
-}
-
-// 🆕 v2.2.0 - Appliquer le thème saisonnier automatique
-function applySeasonalTheme() {
-  const now = new Date();
-  const month = now.getMonth(); // 0-11
-  const widget = document.querySelector('.widget');
-  
-  let season;
-  if (month >= 2 && month <= 4) season = 'spring';      // Mars-Mai
-  else if (month >= 5 && month <= 7) season = 'summer';  // Juin-Août
-  else if (month >= 8 && month <= 10) season = 'autumn'; // Sept-Nov
-  else season = 'winter';                                // Déc-Fév
-  
-  widget.classList.add('season-' + season);
-  console.log(`🌿 Mode saisonnier automatique: ${season}`);
-}
-
-// Mettre à jour la taille (legacy)
-function updateSize(width, height) {
-  const size = Math.min(width, height);
-  document.documentElement.style.setProperty('--widget-size', size + 'px');
-}
-
-// Envoyer un message à MyWallpaper
+// 📤 Envoyer un message à MyWallpaper
 function sendMessage(type, data = {}) {
-  const message = {
-    type,
-    source: 'MyWallpaperAddon',
-    timestamp: Date.now(),
-    ...data
-  };
-  
-  if (window.parent !== window) {
-    window.parent.postMessage(message, '*');
+  try {
+    window.parent.postMessage({
+      type,
+      source: 'matrix-addon',
+      version: '2.5.0',
+      ...data
+    }, '*');
+  } catch (error) {
+    console.error('❌ Erreur envoi message Matrix:', error);
   }
 }
 
-// Démarrer l'addon quand le DOM est prêt
-document.addEventListener('DOMContentLoaded', init);
-
-// Debug - exposer les fonctions globalement
-window.addonDebug = {
-  settings,
-  updateSettings,
-  applyAllSettings,
-  sendMessage
-};
+// 🚀 Démarrage automatique quand le DOM est prêt
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}

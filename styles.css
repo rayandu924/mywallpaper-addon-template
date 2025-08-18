@@ -1,124 +1,194 @@
-/* Variables CSS pour tous les paramètres déclarés */
-:root {
-  /* Couleurs */
-  --primary-color: #3B82F6;
-  --secondary-color: #10B981;
-  
-  /* Dimensions */
-  --widget-size: 200px;
-  --font-size: 16px;
-  --border-radius: 20px;
-  
-  /* Effets */
-  --opacity: 1;
-  --speed: 1s;
-  
-  /* Autres */
-  --refresh-interval: 1000ms;
+/* 🤖 MATRIX v2.5.0 - Cyberpunk CSS */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono:wght@400&display=swap');
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: transparent;
+    font-family: 'Share Tech Mono', monospace;
+    background: #000000;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    color: #00ff41;
 }
 
-.widget {
-  width: var(--widget-size);
-  height: var(--widget-size);
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: var(--border-radius);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  opacity: var(--opacity);
-  transition: all var(--speed) ease;
-  position: relative;
-  overflow: hidden;
+/* Matrix Rain Canvas */
+#matrix-rain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.7;
 }
 
-/* Support de la variable enabled */
-.widget.disabled {
-  opacity: 0.3;
-  pointer-events: none;
+/* Interface Cyberpunk */
+.matrix-interface {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    width: 450px;
+    max-width: 90vw;
 }
 
-/* Support de la variable showBorder */
-.widget.no-border {
-  border: none;
+/* Fenêtre Terminal */
+.terminal-window {
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid #00ff41;
+    border-radius: 8px;
+    box-shadow: 
+        0 0 20px #00ff41,
+        inset 0 0 20px rgba(0, 255, 65, 0.1);
+    animation: terminalGlow 2s ease-in-out infinite alternate;
 }
 
-/* Support de la variable autoHide */
-.widget.auto-hide {
-  opacity: 0.5;
-  transition: opacity 0.3s ease;
+@keyframes terminalGlow {
+    from { box-shadow: 0 0 20px #00ff41, inset 0 0 20px rgba(0, 255, 65, 0.1); }
+    to { box-shadow: 0 0 30px #00ff41, inset 0 0 30px rgba(0, 255, 65, 0.15); }
 }
 
-.widget.auto-hide:hover {
-  opacity: var(--opacity);
+/* En-tête Terminal */
+.terminal-header {
+    background: linear-gradient(90deg, #003300, #006600);
+    padding: 10px 15px;
+    border-bottom: 1px solid #00ff41;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 6px 6px 0 0;
 }
 
-/* Thèmes */
-.theme-classic {
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  backdrop-filter: none;
+.version-badge {
+    color: #00ff41;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-shadow: 0 0 5px #00ff41;
 }
 
-.theme-modern {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+.terminal-controls {
+    display: flex;
+    gap: 8px;
 }
 
-.theme-minimal {
-  background: transparent;
-  border: 2px solid var(--primary-color);
-  backdrop-filter: none;
+.control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid #00ff41;
 }
 
-.theme-glassmorphism {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.control.minimize { background: #ffff00; }
+.control.maximize { background: #00ff00; }
+.control.close { background: #ff0000; }
+
+/* Contenu Terminal */
+.terminal-content {
+    padding: 20px;
+    min-height: 200px;
 }
 
-.clock {
-  text-align: center;
-  color: white;
+/* Titre Matrix */
+.matrix-title {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #00ff41;
+    text-shadow: 0 0 10px #00ff41;
+    animation: titlePulse 3s ease-in-out infinite;
 }
 
-.time {
-  font-size: calc(var(--font-size) * 2.5);
-  font-weight: bold;
-  color: var(--primary-color);
-  margin-bottom: 10px;
-  animation: pulse var(--speed) infinite alternate;
+@keyframes titlePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
 }
 
-.date {
-  font-size: var(--font-size);
-  opacity: 0.8;
-  color: var(--secondary-color);
+/* Informations système */
+.system-info {
+    margin-bottom: 15px;
 }
 
-.display-text {
-  font-size: var(--font-size);
-  color: var(--primary-color);
-  margin-top: 10px;
-  padding: 5px 10px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: calc(var(--border-radius) / 2);
+.info-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
 }
 
-@keyframes pulse {
-  0% { opacity: 0.8; }
-  100% { opacity: 1; }
+.label {
+    color: #00cc33;
+    font-weight: bold;
 }
 
-/* Animation speed control */
-.speed-slow { --speed: 3s; }
-.speed-normal { --speed: 1s; }
-.speed-fast { --speed: 0.3s; }
+.value {
+    color: #00ff41;
+    text-shadow: 0 0 5px #00ff41;
+}
+
+.matrix-time {
+    font-size: 1.2rem;
+    animation: timeFlicker 1s ease-in-out infinite;
+}
+
+@keyframes timeFlicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+.status-active {
+    color: #00ff00;
+    animation: statusBlink 2s ease-in-out infinite;
+}
+
+@keyframes statusBlink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.5; }
+}
+
+/* Curseur Matrix */
+.matrix-cursor {
+    display: inline-block;
+    color: #00ff41;
+    font-size: 1.2rem;
+    animation: cursorBlink 1s ease-in-out infinite;
+    margin-left: 5px;
+}
+
+@keyframes cursorBlink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .matrix-interface {
+        width: 95%;
+    }
+    
+    .matrix-title {
+        font-size: 1.4rem;
+    }
+    
+    .info-line {
+        font-size: 0.85rem;
+    }
+    
+    .terminal-content {
+        padding: 15px;
+    }
+}
+
+/* Variables CSS pour la personnalisation */
+:root {
+    --primary-color: #00ff41;
+    --secondary-color: #003300;
+    --text-color: #00ff41;
+    --bg-color: #000000;
+}

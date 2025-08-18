@@ -3,14 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Addon Template Avancé - Toutes Variables</title>
+    <title>🤖 MATRIX v2.5.0 - Cyberpunk Interface</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="widget theme-modern">
-        <div class="clock" id="clock">
-            <div class="time" id="time">12:00:00</div>
-            <div class="date" id="date">Janvier 1, 2024</div>
+    <!-- Matrix Rain Background -->
+    <canvas id="matrix-rain"></canvas>
+    
+    <!-- Cyberpunk Interface -->
+    <div class="matrix-interface">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <span class="version-badge">v2.5.0</span>
+                <div class="terminal-controls">
+                    <div class="control minimize"></div>
+                    <div class="control maximize"></div>
+                    <div class="control close"></div>
+                </div>
+            </div>
+            <div class="terminal-content">
+                <div class="matrix-title" id="customText">🤖 MATRIX v2.5.0 🤖</div>
+                <div class="system-info">
+                    <div class="info-line">
+                        <span class="label">TIME:</span>
+                        <span class="value matrix-time" id="time">12:00:00</span>
+                    </div>
+                    <div class="info-line">
+                        <span class="label">DATE:</span>
+                        <span class="value" id="date">2024-01-01</span>
+                    </div>
+                    <div class="info-line">
+                        <span class="label">STATUS:</span>
+                        <span class="value status-active">ONLINE</span>
+                    </div>
+                </div>
+                <div class="matrix-cursor">▊</div>
+            </div>
         </div>
     </div>
     
